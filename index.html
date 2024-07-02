@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monte Carlo Integration</title>
+    <link rel="stylesheet" href="monte.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Monte Carlo Integration</h1>
+        <p>Estimación de la integral:</p>
+        <p class="integral">∫<sub>4</sub><sup>6</sup> (5x + 3<sup>x</sup>) dx</p>
+
+        <img src="carlo.gif" alt="Monte Carlo Simulation">
+
+        <br> <br>
+
+        <label for="numPoints">Número de puntos:</label>
+        <input type="number" id="numPoints" name="numPoints" value="1000000">
+
+        <br> <br>
+
+        <button onclick="estimateIntegral()">Calfcular Integral</button>
+        <p id="result">Haz clic en el botón para calcular.</p>
+
+        <p>BY: Esteban Galban, 30274211.</p>
+    </div>
+
+    <script>
+        function f(x) {
+            return 5 * x + Math.pow(3, x);
+        }
+
+        function monteCarloIntegration(a, b, numPoints) {
+            let sum = 0;
+            for (let i = 0; i < numPoints; i++) {
+                let x = Math.random() * (b - a) + a;
+                sum += f(x);
+            }
+            return (b - a) * sum / numPoints;
+        }
+
+        function estimateIntegral() {
+            const a = 4;
+            const b = 6;
+            const numPoints = document.getElementById('numPoints').value;
+
+            if (numPoints <= 0) {
+                document.getElementById('result').innerText = "Por favor, ingrese un número de puntos válido.";
+                return;
+            }
+
+            const integral = monteCarloIntegration(a, b, numPoints);
+            document.getElementById('result').innerText = "La estimación de la integral es: " + integral;
+        }
+    </script>
+
+    <br> <br>
+</body>
+</html>
